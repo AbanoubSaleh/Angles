@@ -1,0 +1,6 @@
+@Angles_HostAddress = http://localhost:5250
+
+GET {{Angles_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
