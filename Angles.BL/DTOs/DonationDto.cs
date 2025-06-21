@@ -25,4 +25,6 @@ public class DonationDto
     public string Country { get; set; }
 
     public string Notes { get; set; }
+    [Required]
+    public string UserId { get; set; }
 }

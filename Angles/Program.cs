@@ -2,10 +2,8 @@ using Angles.BL.Services;
 using Angles.DAL.Data;
 using Angles.DAL.Models;
 using Angles.DAL.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
@@ -30,25 +28,25 @@ builder.Services.AddScoped<IDonationService, DonationService>();
 // Add services
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-// Add JWT Authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
+// Remove JWT Authentication setup
+// builder.Services.AddAuthentication(options =>
+// {
+//     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+// })
+// .AddJwtBearer(options =>
+// {
+//     options.TokenValidationParameters = new TokenValidationParameters
+//     {
+//         ValidateIssuer = false,
+//         ValidateAudience = false,
+//         ValidateLifetime = true,
+//         ValidateIssuerSigningKey = true,
+//         ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//         ValidAudience = builder.Configuration["Jwt:Audience"],
+//         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//     };
+// });
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -118,8 +116,9 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAllOrigins");
 
-app.UseAuthentication();
-app.UseAuthorization();
+// Remove authentication and authorization middleware
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.MapControllers();
 

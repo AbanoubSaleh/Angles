@@ -119,7 +119,8 @@ namespace Angles.BL.Services
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("firstName", user.FirstName),
-                new Claim("lastName", user.LastName)
+                new Claim("lastName", user.LastName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id) // Ensure NameIdentifier is included
             };
 
             var token = new JwtSecurityToken(

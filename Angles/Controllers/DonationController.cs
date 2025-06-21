@@ -1,7 +1,6 @@
 ﻿// d:\Learning\Projects\Abanoub Mories Project\BackEnd\Angles\Angles\Controllers\DonationController.cs
 using Angles.BL.DTOs;
 using Angles.BL.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -20,14 +19,15 @@ namespace Angles.Controllers
         }
 
         [HttpPost]
+        // Removed [Authorize] attribute
         public async Task<IActionResult> CreateDonation([FromBody] DonationDto donationDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
-                return Unauthorized();
+            var userId = donationDto.UserId; // Get userId from the DTO
+            if (string.IsNullOrEmpty(userId))
+                return BadRequest("UserId is required.");
 
             var result = await _donationService.CreateDonationAsync(userId, donationDto);
             if (result)
