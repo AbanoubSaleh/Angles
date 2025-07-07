@@ -27,4 +27,6 @@ public class DonationDto
     public string Notes { get; set; }
     [Required]
     public string UserId { get; set; }
+
+    public int Amount { get; set; } = 0; // Default amount is 0, can be set later
 }

@@ -13,6 +13,10 @@
         public string Country { get; set; }
         public string Notes { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        //transaction number , service number , donation amount 
+        public double Amount { get; set; }
+        public Guid TransactionNumber { get; set; } = Guid.NewGuid();
+        public string ServiceNumber { get; set; } = "5462010038124579";
 
         // Navigation property
         public User User { get; set; }
