@@ -15,6 +15,7 @@ namespace Angles.DAL.Data
         // Remove the DbSet<User> if it's already included in IdentityDbContext
         public DbSet<User> Users { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

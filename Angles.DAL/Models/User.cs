@@ -10,5 +10,6 @@ namespace Angles.DAL.Models
         public bool AcceptedTerms { get; set; }
 
         public IEnumerable<Donation> Donations { get; set; } = new List<Donation>();
+        public IEnumerable<Message> Messages { get; set; } = new List<Message>();
     }
 }
