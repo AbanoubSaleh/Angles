@@ -15,5 +15,6 @@ namespace Angles.DAL.Models
 
         // Navigation property
         public User User { get; set; }
+        public bool IsRead { get; set; } = false;
     }
 }

@@ -1,4 +1,5 @@
 using Angles.BL.DTOs;
+using Angles.BL.DTOs.Admin;
 using Angles.DAL.Models;
 
 namespace Angles.BL.Services
@@ -36,17 +37,18 @@ namespace Angles.BL.Services
             }
         }
 
-        public async Task<IEnumerable<MessageDto>> GetAllMessagesAsync()
+        public async Task<IEnumerable<ReadMessageDto>> GetAllMessagesAsync()
         {
             var messages = await _messageRepository.GetAllAsync();
-            return messages.Select(m => new MessageDto
+            return messages.Select(m => new ReadMessageDto
             {
                 FirstName = m.FirstName,
                 LastName = m.LastName,
                 Email = m.Email,
                 Phone = m.Phone,
                 Content = m.Content,
-                UserId = m.UserId
+                UserId = m.UserId,
+                Id = m.Id,
             });
         }
     }

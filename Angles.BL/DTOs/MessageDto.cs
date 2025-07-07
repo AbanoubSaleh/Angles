@@ -4,6 +4,7 @@ namespace Angles.BL.DTOs
 {
     public class MessageDto
     {
+
         [Required]
         public string FirstName { get; set; }
         
