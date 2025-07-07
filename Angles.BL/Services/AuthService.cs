@@ -1,6 +1,8 @@
 using Angles.BL.DTOs;
+using Angles.DAL.Data;
 using Angles.DAL.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -16,12 +18,14 @@ namespace Angles.BL.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly AnglesDbContext _anglesDbContext;
 
-        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, AnglesDbContext anglesDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _anglesDbContext = anglesDbContext;
         }
 
         public async Task<AuthResponseDto> SignUpAsync(SignUpDto signUpDto)
@@ -132,6 +136,20 @@ namespace Angles.BL.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<ProfileDto> GetProfileDataAsync(string userId)
+        {
+            var result = await _anglesDbContext.Users.Where(x => x.Id == userId).Include(x=>x.Donations).FirstOrDefaultAsync();
+            return new ProfileDto
+            {
+                Id = result.Id,
+                FirstName = result.FirstName,
+                LastName = result.LastName,
+                Email = result.Email,
+                Phone = result.PhoneNumber,
+                Donations = result.Donations.Select(d => DonationResultDto.MapfromEntity(d))
+            };
         }
     }
 }

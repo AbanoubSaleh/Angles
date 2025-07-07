@@ -51,5 +51,19 @@ namespace Angles.Controllers
 
             return Ok(result);
         }
+        [HttpGet("Profile")]
+        public async Task<IActionResult> Profile(string userId)
+        {
+
+
+            var result = await _authService.GetProfileDataAsync(userId);
+
+            if (result == null)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }

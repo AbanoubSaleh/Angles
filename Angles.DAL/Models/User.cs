@@ -8,5 +8,7 @@ namespace Angles.DAL.Models
         public string LastName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool AcceptedTerms { get; set; }
+
+        public IEnumerable<Donation> Donations { get; set; } = new List<Donation>();
     }
 }

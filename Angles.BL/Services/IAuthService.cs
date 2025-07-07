@@ -7,5 +7,6 @@ namespace Angles.BL.Services
     {
         Task<AuthResponseDto> SignUpAsync(SignUpDto signUpDto);
         Task<AuthResponseDto> SignInAsync(SignInDto signInDto);
+        Task<ProfileDto> GetProfileDataAsync(string userId);
     }
 }
